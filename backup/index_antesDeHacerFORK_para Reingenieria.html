@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html class="ui-mobile"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- base href="http://demos.jquerymobile.com/1.4.5/pages-multi-page/index.html" -->
+	<title>Incómodos Invitados</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="shortcut icon" href="icon2.png">
+
+	<link rel="stylesheet" href="themes/incomodos-theme.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<style type="text/css">
+		/* [data-role="page"] { */
+		body {
+			background: url(img/fondo.jpg);
+			// borrable? // background-repeat:repeat-y;
+			// borrable? // background-position:center center;
+			// borrable? // background-attachment:scroll;
+			background-size:100% 100%;
+		}
+		.ui-page {
+			background: transparent;
+		}
+		.z_div_centrado_vertical {
+			position: absolute;
+			left: 50%;
+			top: 45%;
+			transform: translate(-50%, -50%);
+			// borrable? // -webkit-transform: translate(-50%, -50%);
+			width: 80%;
+		}
+		#z_footer {
+			position: fixed;
+			bottom: 0px;
+			left: 9px;
+		}
+		@font-face {
+			font-family: nueva;
+			font-style: normal;
+			src: url(fonts/nueva.ttf);
+		}
+		#z_boton_centrado {
+			/* width: 100% !important; */
+			display: block;
+			margin-left: auto;
+			margin-right: auto
+		}
+		.z_boton:hover { 
+			opacity: 0.3; 
+		}
+		.z_btn_disabled { 
+			opacity: 0.3; 
+		}
+		#ficha_mazo {
+			background-image: url(img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			padding-top:90px;
+			padding-bottom:45px;
+			padding-left:20px;
+			padding-right:20px;
+			color: black;
+			font-size: 1.5em;
+			text-shadow: 0px 0px;
+			margin-top: -15px;
+
+			-moz-column-count: 3;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 3;
+			-webkit-column-gap: 20px;
+		}
+		#page-partida-Resolver label {
+			margin: 7px 0 0;
+		}
+		
+		//no usado
+		z_foooooter {
+			position:fixed;
+			left:0px;
+			bottom:0px;
+			height:30px;
+			width:100%;
+			background:#999;
+		}
+	</style>	
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+	<link rel="prefetch" href="img/btnresolver.png">
+	<link rel="prefetch" href="img/papeles.png">
+	<link rel="prefetch" href="img/acertaste.png">
+	<link rel="prefetch" href="img/fallaste.png">
+	
+	<script>
+		// ***************************************
+		// *** GESTION DE PARTIDAS   *************
+		// ***************************************
+		// 	 VARIABLES GLOBALES para gestionar la partida ACTUAL, estas variables las mantenemos actualizadas durante todas las páginas.
+			var partida = null; //(object con el json solamente de la partida actual)
+			var partidaId = null; //id de partida con formato "123456-A"
+			var partidasJSON = null; //el JSON con todas las partidas.
+
+		function descargaJSON() {
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					partidasJSON = JSON.parse(this.responseText);
+					//document.getElementById("demo").innerHTML = partidas.name;
+				}
+			};
+			xmlhttp.open("GET", "database/PARTIDAS.json", true);
+			xmlhttp.send(); 		
+			console.log("JSON loaded.");
+		}
+		
+		function checkJsonEnMemoria() {
+			if (partidasJSON==null) { descargaJSON() };
+		}
+		
+		// Busca una partida ( formato id = "123456-A" )
+		function buscar_partida(numeroPartida, letraPartida) {
+			checkJsonEnMemoria();
+			// UTIL - formato numeroPartida = 6 caracteres de largo = 5+1)
+			function formatNumPartida(num, tam) {
+				if (num.toString().length <= tam) return formatNumPartida(tam, "0" + num)
+				else return num;
+			}
+			// preparar el formato de las entradas, para evitar errores de formato.
+				letraPartida = letraPartida.toUpperCase(); // SIEMPRE en mayúscula.
+				numeroPartida = formatNumPartida(numeroPartida, 6-1);
+			partidaId = numeroPartida + "-" + letraPartida;
+			console.log( "Buscando la partida: " + partidaId  );
+			for(var i = 0; i < partidasJSON.length; i++) {
+				if(partidasJSON[i]._id == partidaId) {
+					partida = partidasJSON[i];
+					console.log(partida);
+					return partida;
+				} 
+			}
+		}
+
+		<!-- Google Analytics -->
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			//ga('create', 'UA-113805195-1', 'auto');
+			ga('send', 'pageview');
+			</script>
+			<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<!-- End Google Analytics -->
+		
+</head>
+
+<body style="font-family: 'nueva';">
+
+
+
+	
+
+	
+	
+	
+	
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE HOME     *********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-homepage" data-url="page-homepage" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 1018px;">
+	<div role="header">
+		<img src="img/tituloii_800px.png" alt="Juego incomodos invitados"  style="width:95%; margin:10px 11px auto;" />
+	</div>
+	
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<p style="width: 100%;">
+			<a href="#page-partidas"><img src="img/btnpartidas.png" alt="buton partidas"  style="width: 100%;"/></a>
+		</p>
+		<!-- <p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
+	</div>
+	
+	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.15-beta</span></a>
+	
+	
+	<!-- <div data-role="foooter" data-theme="a" role="contentinfo" class="z_footer">  -->
+		 <!-- <h4 class="ui-title" role="heading" aria-level="1">Page Footer</h4>  -->
+	<!-- </div>  -->
+</div>
+<script>
+	$(document).delegate("#page-homepage", "pageshow", function() {
+		// Pre CARGA el Json con todas las partidas. Ejecutamos esto en el pageshow, para no afectar al splash del rendering.
+		// desactivado, porque lo estoy haciendo en todas las páginas //descargaJSON();
+	});
+</script>
+
+
+	
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE HUEVO PASCUA     *************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-huevopascua" data-theme="a" data-url="page-huevopascua">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<a href="#page-partidas"><img src="img/huevopascua.jpg" style="width: 100%;"/></a>
+	</div>
+	<a id="z_footer"  data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+
+
+	
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE RESULTADO ACIERTO     ********************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-resultado-acierto" data-theme="a" data-url="page-resultado-acierto">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<a href="#page-partidas"><img src="img/acertaste.png" style="width: 100%;"/></a>
+	</div>
+	<a id="z_footer" href="#page-homepage" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+
+	
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE RESULTADO FALLO     **********************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-resultado-fallo" data-theme="a" data-url="page-resultado-fallo">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<a href="#page-partidas"><img src="img/fallaste.png" style="width: 100%;"/></a>
+	</div>
+	<a id="z_footer"  data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+
+
+
+	
+		
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE PARTIDAS *********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-partidas" data-theme="a" data-url="page-partidas">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<a href="#page-partida-Aleatoria" data-transition="slidefade"><img src="img/btngenerarpartida.png" id="z_boton_centrado" class="z_boton" style="width: 100%;"/></a>
+		<a href="#page-partida-Especifica-buscar" data-transition="slidefade"><img src="img/btnindicarpartida.png" id="z_boton_centrado"  class="z_boton"  style="width: 76%;"  /></a>
+		<a onclick="return recuperarPartida();" data-transition="slidefade"><img src="img/btnrecuperar.png" id="z_boton_centrado"  class="z_boton"  style="width: 76%;" /></a>
+	</div>
+	<a id="z_footer"  data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+<script>
+	function recuperarPartida() {
+		if (partida != null) {
+			$.mobile.changePage("#page-partida-Numeros");
+		} else {
+			console-log("No se puede recuperar última partida. No lo tenemos en memoria.");
+		}
+	}
+</script>
+    
+	
+	
+	
+	
+	
+	
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE ALEATORIA  *******************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-partida-Aleatoria" data-theme="a" data-url="page-partida-Aleatoria">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<fieldset data-role="controlgroup">
+			<p class="z_font_big"><b>Seleccione dificultad:</b></p>
+			<a onclick="return partidaAleatoria('I');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Iniciación</a>
+			<a onclick="return partidaAleatoria('A');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Muy Fácil</a>
+			<a onclick="return partidaAleatoria('B');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Fácil</a>
+			<a onclick="return partidaAleatoria('C');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Medio</a>
+			<a onclick="return partidaAleatoria('D');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Difícil</a>
+			<a onclick="return partidaAleatoria('E');" class="ui-shadow ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-right">Muy Difícil</a>
+		</fieldset>
+	</div>
+	<a id="z_footer" data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+<script>
+	function partidaAleatoria (dificultad) {
+		function getRandomInt(min, max) { //min incluido, max excluido
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+		checkJsonEnMemoria();
+		var numero_random = getRandomInt (1, partidasJSON.length-1);
+		if ( partidasJSON[numero_random].DIFICULTAD == dificultad ) {
+			partida = partidasJSON[numero_random];
+			partidaId = partida._id;
+			console.log	("Partida aleatoria encontrada. Dificultad="+partida.DIFICULTAD+". Id="+partidaId);   console.log(partida);	
+			if (partida != null) {
+				$.mobile.changePage("#page-partida-Numeros");
+			}
+		} else {
+			partidaAleatoria(dificultad);
+		}
+	}
+</script>
+
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE BUSCAR   *********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-partida-Especifica-buscar" data-theme="a" data-url="two">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<p class="z_font_big">
+			<form id="form-numero-partida" name="form-numero-partida"  > <!-- BORRAME action="#page-partida-Resolver"  method="GET"--> 
+				<b>Introduce el identificador de la partida</b>
+				<div class="ui-field-contain" style="margin-top: -10px;">
+					<input pattern=".{6,6}" cols="6" rows="1" min="6" max="6" minlength=6 maxlength=6 required="required" autocomplete="off" name="numeros" id="textarea-numeros" placeholder="números"></textarea>
+					<input pattern=".{1,1}" cols="1" rows="1" min="1" max="1" minlength=1 maxlength=1 required="required" autocomplete="off" name="letra"   id="textarea-letra" placeholder="letra" autocapitalize=characters ></textarea>
+					<a onclick="validarIdPartida();"  data-direction="slidefade" class="ui-btn ui-icon-carat-r ui-btn-icon-right ui-shadow ui-corner-all ui-btn-b">Buscar partida</a>
+				</div>
+			</form>
+		</p>
+	</div>
+	<a id="z_footer"   data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+<script>
+	function validarIdPartida() { //121931-F
+		if ($('#textarea-numeros').val() == '151617') {
+			$.mobile.changePage("#page-huevopascua");
+		}
+		partida = buscar_partida(  $('#textarea-numeros').val()  ,  $('#textarea-letra').val()  );
+		if (partida != null) {
+			$.mobile.changePage("#page-partida-Numeros");
+		}
+	}
+</script>
+
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE NUMEROS  *********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-partida-Numeros" data-theme="a" data-url="page-partida-Numeros">
+	<div role="main" class="ui-content z_div_centrado_vertical" style="width: 95%;">
+		<div id="ficha_mazo">
+			
+		</div>
+	</div>
+	<div id="z_footer"> 
+		<a  data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+		<!-- <a id="z_footer"   data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" style="width: 35%;" /></a> -->
+		<a href="#page-partida-Resolver" data-transition="slidefade"><img src="img/btnresolver.png" class="z_boton" style="width: 63%;" /></a>
+	</div>
+</div>
+<script>
+	$(document).delegate("#page-partida-Numeros", "pagebeforeshow", function() {
+		txt = partida.MAZO.replace(/\[/g,'').replace(/\]/g,'') // elimina caracteres:  [ y ]
+		//test // arrayNum = txt.split(',').sort((a,b)=>a-b) //crea array desde texto separado por comas, y ordena los numeros
+		$("#ficha_mazo").html(txt);
+	});
+</script>
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE RESOLVER  ********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="page-partida-Resolver" data-theme="a" data-url="page-partida-Resolver">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<form name="form-numero-partida" action="XXXXX.php" method="GET">
+			<div class="ui-field-contain">
+				<label for="select-asesino">¿Quién es el asesino?</label>
+				<select name="select-asesino" id="select-asesino" data-native-menu="true" required>
+					<option value="" disabled selected hidden>asesino</option>
+					<option>Angelica Albinson</option>
+					<option>Claudette Cazelar</option>
+					<option>Greg Gaffney</option>
+					<option>Hermanas Berwick</option>
+					<option>Mortimer W. Mollow</option>
+					<option>Stanley Smithe</option>
+				</select>
+				<label for="select-arma">¿Cómo lo hizo?</label>
+				<select name="select-arma" id="select-arma" data-native-menu="true" required>
+					<option value="" disabled selected hidden>arma</option>
+					<option>abrecartas</option>
+					<option>almohada</option>
+					<option>anticongelante</option>
+					<option>cordón de cortina</option>
+					<option>correa de cuero</option>
+					<option>cuchillo de cocina</option>
+					<option>escopeta de caza</option>
+					<option>llave inglesa</option>
+					<option>machete de caza</option>
+					<option>matarratas</option>
+					<option>pala</option>
+					<option>pesticida</option>
+					<option>pistola Deringer</option>
+					<option>pistolón</option>
+					<option>planta venenosa</option>
+					<option>revólver</option>
+					<option>sable</option>
+					<option>sartén</option>
+					<option>soga</option>
+					<option>taco de billar</option>
+				</select>
+				<label for="select-movil">¿Por qué?</label>
+				<select name="select-movil" id="select-movil" data-native-menu="true" required>
+					<option value="" disabled selected hidden>móvil</option>
+					<option hidden data-persona="Angelica Albinson">Encargo funesto</option>
+					<option hidden data-persona="Angelica Albinson">Obsequio envenenado</option>
+					<option hidden data-persona="Angelica Albinson">Principios extremos</option>
+					<option hidden data-persona="Hermanas Berwick">Ambición ilimitada</option>
+					<option hidden data-persona="Hermanas Berwick">Ofensa intelectual</option>
+					<option hidden data-persona="Hermanas Berwick">Vendetta familiar</option>
+					<option hidden data-persona="Claudette Cazelar">Desengaño fatal</option>
+					<option hidden data-persona="Claudette Cazelar">Farsa destapada</option>
+					<option hidden data-persona="Claudette Cazelar">Negocio insospechado</option>
+					<option hidden data-persona="Greg Gaffney">Amaños descubiertos</option>
+					<option hidden data-persona="Greg Gaffney">Maltrato animal</option>
+					<option hidden data-persona="Greg Gaffney">Tradición robada</option>
+					<option hidden data-persona="Mortimer W. Mollow">Anhelos quebrados</option>
+					<option hidden data-persona="Mortimer W. Mollow">Idea arrebatada</option>
+					<option hidden data-persona="Mortimer W. Mollow">Paternidad desatendida</option>
+					<option hidden data-persona="Stanley Smithe">Acoso universitario</option>
+					<option hidden data-persona="Stanley Smithe">Apuesta macabra</option>
+					<option hidden data-persona="Stanley Smithe">Miserias delatadas</option>
+				</select>
+				<br>
+				<label for="switch-complice">¿Hubo cómplice?</label>
+				<select name="switch-complice" id="switch-complice" data-role="flipswitch" data-theme="b">
+					<option value="no">no</option>
+					<option value="si">sí</option>
+				</select>
+				<label for="select-complice">¿Quién fue el complice?</label>
+				<select name="select-complice" id="select-complice" data-native-menu="true">
+					<option value="" disabled selected hidden>cómplice</option>
+					<option>Angelica Albinson</option>
+					<option>Claudette Cazelar</option>
+					<option>Greg Gaffney</option>
+					<option>Hermanas Berwick</option>
+					<option>Mortimer W. Mollow</option>
+					<option>Stanley Smithe</option>
+				</select>
+				<label for="select-complice-movil">¿Cuál fue el móvil del cómplice?</label>
+				<select name="select-complice-movil" id="select-complice-movil" data-native-menu="true">
+					<option value="" disabled selected hidden>móvil</option>
+					<option hidden data-persona="Angelica Albinson">Encargo funesto</option>
+					<option hidden data-persona="Angelica Albinson">Obsequio envenenado</option>
+					<option hidden data-persona="Angelica Albinson">Principios extremos</option>
+					<option hidden data-persona="Hermanas Berwick">Ambición ilimitada</option>
+					<option hidden data-persona="Hermanas Berwick">Ofensa intelectual</option>
+					<option hidden data-persona="Hermanas Berwick">Vendetta familiar</option>
+					<option hidden data-persona="Claudette Cazelar">Desengaño fatal</option>
+					<option hidden data-persona="Claudette Cazelar">Farsa destapada</option>
+					<option hidden data-persona="Claudette Cazelar">Negocio insospechado</option>
+					<option hidden data-persona="Greg Gaffney">Amaños descubiertos</option>
+					<option hidden data-persona="Greg Gaffney">Maltrato animal</option>
+					<option hidden data-persona="Greg Gaffney">Tradición robada</option>
+					<option hidden data-persona="Mortimer W. Mollow">Anhelos quebrados</option>
+					<option hidden data-persona="Mortimer W. Mollow">Idea arrebatada</option>
+					<option hidden data-persona="Mortimer W. Mollow">Paternidad desatendida</option>
+					<option hidden data-persona="Stanley Smithe">Acoso universitario</option>
+					<option hidden data-persona="Stanley Smithe">Apuesta macabra</option>
+					<option hidden data-persona="Stanley Smithe">Miserias delatadas</option>
+				</select>
+				<br>
+			</div>
+		</form>
+	</div>
+	<div id="z_footer"> 
+		<a  data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+		<a  onclick="return validarSolucion();" data-transition="slidefade"><img id="btn_comprobar" src="img/btncomprobar.png" class="z_boton z_btn_disabled" style="width: 63%;" /></a>
+	</div>
+</div>
+
+<script>
+	// Javascript para gestión del FORMULARIO
+	$( document ).delegate("#page-partida-Resolver", "pagebeforeshow", function() {
+		// UTIL - resetea un campo tipo "select-arma"
+			function resetSelectFormSolucion(field) {
+				$("#select-"+field+" option").get(0).selected = true; 
+				$("#select-"+field).selectmenu("refresh"); 				
+			}
+		// Dependencia entre campos MOVIL y Asesino/Complice:
+		// Estas 2 funciones, sirven para que los 2 combos de MOVIL, dependan respectivamente del Asesino y del Complice.
+			$(function(){
+				$('#select-asesino').change(function(){ // when one changes
+					asesino = $('#select-asesino').val();
+					$("#select-movil").selectmenu('enable');
+					resetSelectFormSolucion("movil");
+					$("#select-movil option").attr("hidden",true); 		//desactiva todas los móviles 
+					$("#select-movil [data-persona='"+asesino+"']").removeAttr("hidden"); // activa solo los móviles de un asesino concreto.			
+				});
+			});
+			$(function(){
+				$('#select-complice').change(function(){ // when one changes
+					complice = $('#select-complice').val();
+					$("#select-complice-movil").selectmenu('enable');		
+					resetSelectFormSolucion("complice-movil");
+					$("#select-complice-movil option").attr("hidden",true); 		//desactiva todas los móviles 
+					$("#select-complice-movil [data-persona='"+complice+"']").removeAttr("hidden"); // activa solo los móviles de un complice concreto.			
+				});
+			});
+		// Opciones de COMPLICE
+			function activaComplice() {
+				$("#select-complice").selectmenu('enable');	
+			}
+			function desactivaComplice() {
+				$("#switch-complice").val("no").flipswitch("refresh");				
+				$("#select-complice").selectmenu('disable');	
+				$("#select-complice-movil").selectmenu('disable');
+				// resetea valores
+				resetSelectFormSolucion("complice-movil");
+				resetSelectFormSolucion("complice");
+			}
+			// activar opciones-complice si cambio en el switch.
+			$(function(){
+				$('#switch-complice').change(function(){ // when one changes
+					hayComplice = $('#switch-complice').val();
+					if (hayComplice == "si") { activaComplice(); };
+					if (hayComplice == "no") { desactivaComplice(); };
+				});
+			});	
+		// boton Comprobar (activar si todos los campos rellenos)
+			function checkSiTodosCamposRellenos() {
+				check = true; 
+				$("#page-partida-Resolver select[id*=select]:enabled  option:selected").each( function() { //en todos los select activos, hacemos una iteración sobre los option seleccionados para ver si están con la opcion=0 (sin seleccionar ningún valor todavía)
+					if (this.index==0){check = false;}
+				});
+				return check;
+			};
+			$(function(){
+				$("#page-partida-Resolver select").change(function(){
+					if (checkSiTodosCamposRellenos()) {	$("#btn_comprobar").removeClass('z_btn_disabled'); }
+					else {	$("#btn_comprobar").addClass('z_btn_disabled'); };
+				});
+			});	
+		// Resetea todo el formulario
+			function resetFormSolucion() {
+				resetSelectFormSolucion("arma");
+				resetSelectFormSolucion("asesino");
+				resetSelectFormSolucion("movil");
+				$("#select-movil").selectmenu('disable');
+				$("#btn_comprobar").addClass('z_btn_disabled');
+				desactivaComplice();
+			}			
+		resetFormSolucion();	
+	});
+	
+	// comprobación de la solución:
+		function validarSolucion() {
+			function irExito() { $.mobile.changePage("#page-resultado-acierto",{transition: "pop"}) };
+			function irFallo() { $.mobile.changePage("#page-resultado-fallo",{transition: "pop"}) };
+			if ($("#btn_comprobar").hasClass("z_btn_disabled") == true) {return} //si el botón de Comprobar esta desactivado, cancela la comprobación y no hace nada y sale de la función.
+			resultado = null;
+			if 	(  	$('#select-asesino').val()==partida.ASESINO &&   
+					$('#select-arma').val()==partida.ARMA && 
+					$('#select-movil').val() == partida.MOVIL ) {
+						if ( partida.HAYCOMPLICE=="false" && $('#switch-complice').val()=="no") { irExito() }
+						else if ( partida.HAYCOMPLICE=="true" && $('#switch-complice').val()=="si") { 
+							if ($('#select-complice').val()==partida.COMPLICE && $('#select-complice-movil').val()==partida.MOVIL_COMPLICE) { irExito() }
+							else { irFallo() }
+						} else { irFallo() }
+			} else { irFallo() }
+		}
+</script>
+
+
+
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE RELEASE NOTES     ************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+<style type="text/css">
+	#page-releasenotes div { font-size:0.65em; background: black; font-family: 'arial'; }
+	#page-releasenotes .version { background: red; }
+	#page-releasenotes .new { background: green; }
+	#page-releasenotes .fix { background: orange; }
+</style>
+<div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
+	<div role="main" class="ui-content z_div_centrado_vertical"  >
+		<br><br><span class="version"><br>PENDIENTE</span>
+			<br><span class="new">[NEW]</span> Buscar partida - pendiente pantalla si no se encuentra la partida.
+			<br><span class="new">[NEW]</span> Errores: cuando la app se deja dormida durante horas, en código intentar que DBJOSN=null para no usar memoria, pero hay q hacer un wait en el checkJson para q no falle al ser lanzado por buscar.
+			<br><span class="new">[NEW]</span> Errores: cuando la app se deja dormida durante horas, al abrirse se ve mal y no hay forma de moverse bien (botones superpuestos).
+			<br><span class="new">[NEW]</span> Errores: cuando la app se deja dormida durante horas, al abrirse el JSON no está cargado y hay funciones rotas. Hay que: siempre que se vaya a cambiar de página, mirar en qué evento concreto, checkJsonEnMemoria()
+			<br><span class="new">[NEW]</span> Google Analytics, pendiente enviar título.
+			<br><span class="new">[NEW]</span> Google Analytics, pendiente enviar la dificultad de la partida (en la page de ver numeros y en la de resultado ¿cómo?)
+			<br><span class="new">[NEW]</span> Users Histórico, persistir las partidas (fecha, numero, dificultad).
+			<br><span class="new">[NEW]</span> Juego Físico - Instrucciones (para los users q se descarguen esto... hay q explicarles que hay un juego de mesa).
+			<br><span class="new">[NEW]</span> Juego Físico - dónde se puede comprar.
+
+		<br><br><span class="version"><br>v2.15-BETA   (2018feb13-19h16m)</span>
+			<br><span class="new">[NEW]</span> añadida el sistema de Google Analytics, pero no implementadas todas las llamadas.
+
+		<br><br><span class="version"><br>v2.14-BETA   (2018feb08-14h16m)</span>
+			<br><span class="new">[NEW]</span> añadida esta página de información con cada nueva versión.
+			<br><span class="fix">[VISUAL]</span> al abrir las páginas de acierto/fallo, la transición visual ahora es POP.
+			<br><span class="fix">[VISUAL]</span> alinear (más abajo a la izq) el botón "volver".
+		<br><br><span class="version">v2.13-BETA   (2018feb08-03h51m)</span>
+			<br><span class="new">[NEW]</span> añadidas las pantallas de ACIERTO y ERROR. Muy necesarias.
+			<br><span class="new">[NEW]</span> añadido en el formulario de solución, que el botón de COMPROBAR sea INTELIGENTE, sólo activo si los campos están rellenos correctamente.
+	</div>
+	<a id="z_footer"  data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+</div>
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE ???????  *********************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+
+<div data-role="page" id="popup" data-url="popup">
+
+
+
+
+
+	<div data-role="header" data-theme="b">
+		<h1>Dialog</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<h2>Popup</h2>
+		<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>
+		<p><a href="#one" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-back ui-btn-icon-left">Back to page "one"</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page popup -->
+
+
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div>
+
+
+
+<script>
+	/* ************************************/
+	/* Google Analytics - Código Adhoc, para enviar una pageview, cada vez q hay cambio virtual de pagina en Jquerymobile */
+		$('[data-role=page]').on('pageshow', function (event, ui) {
+			try {
+				hash = location.hash;
+				if (hash) 	{ ga('send', 'pageview', hash.substr(1));
+				} else 		{ ga('send', 'pageview');
+				};
+			} catch(err) { 
+				console.log("ERROR no controlado en el envío de Stats (habría que echar un vistazo al código).")
+			};
+		});
+	// Cada vez que se vaya a cerrar una página, miro si el JSON existe, POR SI ACASO!!! Pendiente de ver si tiene sentido esta funcionalidad.
+		$('[data-role=page]').on('pagebeforehide', function (event, ui) {
+			checkJsonEnMemoria();
+		});
+</script>
+
+</body></html>
