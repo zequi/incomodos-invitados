@@ -39,8 +39,8 @@ const incomodosInvitados = {
 		this.mazoArray = this.partida.MAZO.replace('[','').replace(']','').split(', ').map( function(item){return parseInt(item, 10);} );	 //crea un array de Integers con map() a aprtir de la cadena MAZO.
 	},
 	
-	mazoArrayRango: function(array, start, end) {
-		return array.filter( (element, index)=>element>=start && element<=end ) //genera un array parcial del mazo, cmparando el valor  con respecto a start/end  incluídos.
+	mazoArrayRango: function(start, end) {
+		return this.mazoArray.filter( (element, index)=>element>=start && element<=end ) //genera un array parcial del mazo, cmparando el valor  con respecto a start/end  incluídos.
 	},
 	
 	// Busca una partida ( formato id = "123456-A" )

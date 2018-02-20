@@ -1,0 +1,151 @@
+		body {
+			background: url(../img/fondo.jpg);
+			
+			// borrable? // background-repeat:repeat-y;
+			// borrable? // background-position:center center;
+			// borrable? // background-attachment:scroll;
+			background-size:100% 100%;
+		}
+		.ui-page {
+			background: transparent;
+		}
+		.z_div_centrado_vertical {
+			position: absolute;
+			left: 50%;
+			top: 45%;
+			transform: translate(-50%, -50%);
+			// borrable? // -webkit-transform: translate(-50%, -50%);
+			width: 80%;
+		}
+		#z_footer {
+			position: fixed;
+			bottom: 0px;
+			left: 9px;
+		}
+		@font-face {
+			font-family: nueva;
+			font-style: normal;
+			src: url(../fonts/nueva.ttf);
+		}
+		#z_boton_centrado {
+			/* width: 100% !important; */
+			display: block;
+			margin-left: auto;
+			margin-right: auto
+		}
+		.z_boton:hover { 
+			opacity: 0.3; 
+		}
+		.z_btn_disabled { 
+			opacity: 0.3; 
+		}
+		#page-partida-Resolver label {
+			margin: 7px 0 0;
+		}
+		
+		//no usado
+		z_foooooter {
+			position:fixed;
+			left:0px;
+			bottom:0px;
+			height:30px;
+			width:100%;
+			background:#999;
+		}
+		
+		
+		
+		
+		
+		
+
+		#ficha_mazo1 {
+			background-image: url(../img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 2.0em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			/*-moz-column-count: 2;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 2;
+			-webkit-column-gap: 20px;*/
+		}
+		#ficha_mazo2 {
+			background-image: url(../img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 2.0em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			/*-moz-column-count: 2;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 2;
+			-webkit-column-gap: 20px;*/
+		}
+		#ficha_mazo3 {
+			background-image: url(../img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 2.0em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			/*-moz-column-count: 2;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 2;
+			-webkit-column-gap: 20px;*/
+		}
+		#ficha_mazo4 {
+			background-image: url(../img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 2.0em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			/*-moz-column-count: 2;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 2;
+			-webkit-column-gap: 20px;*/
+		}
+		#ficha_mazo5 {
+			background-image: url(../img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 2.0em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			/*-moz-column-count: 2;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 2;
+			-webkit-column-gap: 20px;*/
+		}

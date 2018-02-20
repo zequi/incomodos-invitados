@@ -11,117 +11,7 @@
 	<link rel="stylesheet" href="themes/incomodos-theme.css" />
 	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
-	<style type="text/css">
-		/* [data-role="page"] { */
-		body {
-			background: url(img/fondo.jpg);
-			
-			// borrable? // background-repeat:repeat-y;
-			// borrable? // background-position:center center;
-			// borrable? // background-attachment:scroll;
-			background-size:100% 100%;
-		}
-		.ui-page {
-			background: transparent;
-		}
-		.z_div_centrado_vertical {
-			position: absolute;
-			left: 50%;
-			top: 45%;
-			transform: translate(-50%, -50%);
-			// borrable? // -webkit-transform: translate(-50%, -50%);
-			width: 80%;
-		}
-		#z_footer {
-			position: fixed;
-			bottom: 0px;
-			left: 9px;
-		}
-		@font-face {
-			font-family: nueva;
-			font-style: normal;
-			src: url(fonts/nueva.ttf);
-		}
-		#z_boton_centrado {
-			/* width: 100% !important; */
-			display: block;
-			margin-left: auto;
-			margin-right: auto
-		}
-		.z_boton:hover { 
-			opacity: 0.3; 
-		}
-		.z_btn_disabled { 
-			opacity: 0.3; 
-		}
-		#ficha_mazo {
-			background-image: url(img/papeles.png);
-			background-size: 100% 100%;
-			background-repeat:no-repeat;
-			//padding-top:90px;
-			//padding-bottom:45px;
-			//padding-left:20px;
-			//padding-right:20px;
-			color: black;
-			font-size: 1.5em;
-			text-shadow: 0px 0px;
-			//margin-top: -15px;
-
-			-moz-column-count: 3;
-			-moz-column-gap: 20px;
-			-webkit-column-count: 3;
-			-webkit-column-gap: 20px;
-		}
-		#ficha_mazo2 {
-			background-image: url(img/papeles.png);
-			background-size: 100% 100%;
-			background-repeat:no-repeat;
-			//padding-top:90px;
-			//padding-bottom:45px;
-			//padding-left:20px;
-			//padding-right:20px;
-			color: black;
-			font-size: 1.5em;
-			text-shadow: 0px 0px;
-			//margin-top: -15px;
-
-			-moz-column-count: 3;
-			-moz-column-gap: 20px;
-			-webkit-column-count: 3;
-			-webkit-column-gap: 20px;
-		}
-		#ficha_mazo3 {
-			background-image: url(img/papeles.png);
-			background-size: 100% 100%;
-			background-repeat:no-repeat;
-			//padding-top:90px;
-			//padding-bottom:45px;
-			//padding-left:20px;
-			//padding-right:20px;
-			color: black;
-			font-size: 1.5em;
-			text-shadow: 0px 0px;
-			//margin-top: -15px;
-
-			-moz-column-count: 3;
-			-moz-column-gap: 20px;
-			-webkit-column-count: 3;
-			-webkit-column-gap: 20px;
-		}
-		#page-partida-Resolver label {
-			margin: 7px 0 0;
-		}
-		
-		//no usado
-		z_foooooter {
-			position:fixed;
-			left:0px;
-			bottom:0px;
-			height:30px;
-			width:100%;
-			background:#999;
-		}
-	</style>	
+	<link rel="stylesheet" href="css/incomodosinvitados.css" />
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -178,7 +68,7 @@
 		<!-- <p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
 	</div>
 	
-	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.21-beta</span></a>
+	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.22-beta</span></a>
 	
 	
 	<!-- <div data-role="foooter" data-theme="a" role="contentinfo" class="z_footer">  -->
@@ -376,9 +266,11 @@
 	</div>	
 	<div role="main" class="ui-content z_div_centrado_vertical" style="width: 95%;">
 		<div data-role="swipe">
-			<div id="ficha_mazo"></div>
+			<div id="ficha_mazo1"></div>
 			<div id="ficha_mazo2"></div>
 			<div id="ficha_mazo3"></div>
+			<div id="ficha_mazo4"></div>
+			<div id="ficha_mazo5"></div>
 		</div>
 	</div>
 	<div id="z_footer"> 
@@ -389,11 +281,12 @@
 </div>
 <script>
 	$(document).delegate("#page-partida-Numeros", "pagebeforeshow", function() {
-		txt = incomodosInvitados.partida.MAZO.replace(/\[/g,'').replace(/\]/g,'') // elimina caracteres:  [ y ]
-		$("#ficha_mazo").html(txt);
-		$("#ficha_mazo2").html(txt);
-		$("#ficha_mazo3").html(txt);
-		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' -- Dificultad: '+incomodosInvitados.partidaGetDificultadTxt()+' -- Jugadores: '+incomodosInvitados.jugadoresNumero );
+		$("#ficha_mazo1").html(  incomodosInvitados.mazoArrayRango(001,050).join(", ") );
+		$("#ficha_mazo2").html(  incomodosInvitados.mazoArrayRango(051,100).join(", ") );
+		$("#ficha_mazo3").html(  incomodosInvitados.mazoArrayRango(101,150).join(", ") );
+		$("#ficha_mazo4").html(  incomodosInvitados.mazoArrayRango(151,200).join(", ") );
+		$("#ficha_mazo5").html(  incomodosInvitados.mazoArrayRango(201,250).join(", ") );
+		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' Dificultad: '+incomodosInvitados.partidaGetDificultadTxt()+' Jugadores: '+incomodosInvitados.jugadoresNumero );
 	});
 </script>
 
@@ -630,8 +523,13 @@
 </style>
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
+		<br><br><span class="version"><br>v2.22-BETA   (2018feb20-00h43m)</span>
+			<br><span class="new">[NEW]</span> Optimización Código: CSS a archivo externo.
+			<br><span class="fix">[VISUAL]</span> Page-Números: el mazo de nº dividido en 5 fichas, pendiente diseño.
+
 		<br><br><span class="version"><br>v2.21-BETA   (2018feb20-23h32m)</span>
 			<br><span class="new">[NEW]</span> Se pueden seleccionar 2 jugadores.
+			<br><span class="fix">[VISUAL]</span> Se muestra el nº de Jugadores en el pantalla de Números.
 
 		<br><br><span class="version"><br>v2.20-BETA   (2018feb20-01h17m)</span>
 			<br><span class="fix">[VISUAL]</span> En página Números, añadido el swipe, pero no terminado, hardcoded los mazos.
