@@ -178,7 +178,7 @@
 		<!-- <p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
 	</div>
 	
-	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.19-beta</span></a>
+	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.21-beta</span></a>
 	
 	
 	<!-- <div data-role="foooter" data-theme="a" role="contentinfo" class="z_footer">  -->
@@ -280,14 +280,15 @@
 <!-- ***************************************************************************************/ -->
 <div data-role="page" id="page-jugadores-numero" data-theme="a" data-url="page-jugadores-numero">
 	<div role="main" class="ui-content z_div_centrado_vertical">
-		<fieldset id="formJugadoresNum" data-role="controlgroup" data-type="horizontal" data-mini="false">
+		<fieldset id="formJugadoresNum" data-role="controlgroup" data-type="horizontal" data-mini="true">
 			<legend>Selecciona el número de jugadores:</legend>
-			<input type="radio" name="radio-choice" id="radio-choice-1" value="3" checked="checked"/><label for="radio-choice-1">3</label>
-			<input type="radio" name="radio-choice" id="radio-choice-2" value="4"/><label for="radio-choice-2">4</label>
-			<input type="radio" name="radio-choice" id="radio-choice-3" value="5"/><label for="radio-choice-3">5</label>
-			<input type="radio" name="radio-choice" id="radio-choice-4" value="6"/><label for="radio-choice-4">6</label>
-			<input type="radio" name="radio-choice" id="radio-choice-5" value="7"/><label for="radio-choice-5">7</label>
-			<input type="radio" name="radio-choice" id="radio-choice-6" value="8"/><label for="radio-choice-6">8</label>
+			<input type="radio" name="radio-choice" id="radio-choice-1" value="2" checked="checked"/><label for="radio-choice-1">2</label>
+			<input type="radio" name="radio-choice" id="radio-choice-2" value="3"/><label for="radio-choice-2">3</label>
+			<input type="radio" name="radio-choice" id="radio-choice-3" value="4"/><label for="radio-choice-3">4</label>
+			<input type="radio" name="radio-choice" id="radio-choice-4" value="5"/><label for="radio-choice-4">5</label>
+			<input type="radio" name="radio-choice" id="radio-choice-5" value="6"/><label for="radio-choice-5">6</label>
+			<input type="radio" name="radio-choice" id="radio-choice-6" value="7"/><label for="radio-choice-6">7</label>
+			<input type="radio" name="radio-choice" id="radio-choice-7" value="8"/><label for="radio-choice-7">8</label>
 		</fieldset>
 		<fieldset id="formJugadoresNombres" data-mini="false">
 			<legend>Pon el nombre de cada jugador:</legend>
@@ -392,7 +393,7 @@
 		$("#ficha_mazo").html(txt);
 		$("#ficha_mazo2").html(txt);
 		$("#ficha_mazo3").html(txt);
-		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' -- Dificultad: '+incomodosInvitados.partidaGetDificultadTxt());
+		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' -- Dificultad: '+incomodosInvitados.partidaGetDificultadTxt()+' -- Jugadores: '+incomodosInvitados.jugadoresNumero );
 	});
 </script>
 
@@ -629,6 +630,12 @@
 </style>
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
+		<br><br><span class="version"><br>v2.21-BETA   (2018feb20-23h32m)</span>
+			<br><span class="new">[NEW]</span> Se pueden seleccionar 2 jugadores.
+
+		<br><br><span class="version"><br>v2.20-BETA   (2018feb20-01h17m)</span>
+			<br><span class="fix">[VISUAL]</span> En página Números, añadido el swipe, pero no terminado, hardcoded los mazos.
+
 		<br><br><span class="version"><br>v2.19-BETA   (2018feb19-15h07m)</span>
 			<br><span class="fix">[VISUAL]</span> En ficha de numeros de partida, mostrar Id+dificultad.
 			<br><span class="fix">[VISUAL]</span> Si user refresca la página, enviamos a inicio, para evitar solapamientos feos. No convencido todavía con esta solución, si lo probáis, dadme feedback, please.
