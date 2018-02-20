@@ -6,6 +6,7 @@ const incomodosInvitados = {
 	Id: null,
 	partida: null,
 	databaseJSON: null,
+	mazoArray: null,
 	jugadoresNumero: 3, //por defecto las partidas son de 3 jugadores
 	jugadores: [	
 		{nombre:"Jugador 1"},
@@ -29,11 +30,14 @@ const incomodosInvitados = {
 		xmlhttp.send(); 	
 	},
 
-	
 	checkJsonEnMemoria: function() {
 		if (this.databaseJSON==null) { this.downloadJSON() };
 	},
-	
+
+	setPartida: function(part) {
+		this.partida = part;
+		this.mazoArray = this.partida.MAZO.replace('[','').replace(']','').split(', ');
+	},
 	
 	// Busca una partida ( formato id = "123456-A" )
 	partidaBuscar: function(numeroPartida, letraPartida){
@@ -50,7 +54,7 @@ const incomodosInvitados = {
 		for(var i = 0; i < this.databaseJSON.length; i++) {
 			if(this.databaseJSON[i]._id == IdTemporal) {
 				console.log("Encontrada partida: "+IdTemporal);
-				this.partida = this.databaseJSON[i];
+				this.setPartida(this.databaseJSON[i]);
 				this.Id = IdTemporal;
 				return this.partida;
 			} else { console.log("NO Encontrada partida: "+IdTemporal); }
@@ -64,7 +68,7 @@ const incomodosInvitados = {
 		}
 		var numero_random = getRandomInt (1, this.databaseJSON.length-1);
 		if ( this.databaseJSON[numero_random].DIFICULTAD == dificultad ) {
-			this.partida = this.databaseJSON[numero_random];
+			this.setPartida(this.databaseJSON[numero_random]);
 			this.Id = this.partida._id;
 			console.log	("Partida aleatoria encontrada. Dificultad="+this.partida.DIFICULTAD+". Id="+this.Id);   console.log(this.partida);	
 			if (this.partida != null) {
@@ -84,7 +88,6 @@ const incomodosInvitados = {
 		this.partida.DIFICULTAD=='E' ? txt='Muy Difícul' : TXT='ERROR';
 		return txt;
 	}
-	
 	
 }
 

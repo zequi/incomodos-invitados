@@ -58,14 +58,50 @@
 			background-image: url(img/papeles.png);
 			background-size: 100% 100%;
 			background-repeat:no-repeat;
-			padding-top:90px;
-			padding-bottom:45px;
-			padding-left:20px;
-			padding-right:20px;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
 			color: black;
 			font-size: 1.5em;
 			text-shadow: 0px 0px;
-			margin-top: -15px;
+			//margin-top: -15px;
+
+			-moz-column-count: 3;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 3;
+			-webkit-column-gap: 20px;
+		}
+		#ficha_mazo2 {
+			background-image: url(img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 1.5em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
+
+			-moz-column-count: 3;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 3;
+			-webkit-column-gap: 20px;
+		}
+		#ficha_mazo3 {
+			background-image: url(img/papeles.png);
+			background-size: 100% 100%;
+			background-repeat:no-repeat;
+			//padding-top:90px;
+			//padding-bottom:45px;
+			//padding-left:20px;
+			//padding-right:20px;
+			color: black;
+			font-size: 1.5em;
+			text-shadow: 0px 0px;
+			//margin-top: -15px;
 
 			-moz-column-count: 3;
 			-moz-column-gap: 20px;
@@ -89,6 +125,8 @@
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/jquery.mobile.swipe-0.1.0/swipe.js"></script>
+	<script src="js/jquery.mobile.swipe-0.1.0/jquery.mobile.swipe.js"></script>
 	<script src="js/partida.js"></script>
 
 
@@ -115,10 +153,10 @@
 <!-- ***************************************************************************************/ -->
 <!-- *** PAGE INTRO     *********************************************************************/ -->
 <!-- ***************************************************************************************/ -->
-<div data-role="page" id="page-intro" data-url="page-intro" ></div>
+<div data-role="page" id="page-intro" data-url="page-intro" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 1018px;"></div>
 <script>
 	// esta página completamente vacía es artificial, para evitar que si se da a refrescar, se superposiciones objetos feamente. Si el usuario refresca, se manda a inicio, no es lo mejor, pero por ahora suficiente.
-	setTimeout(	function(){$.mobile.changePage("#page-homepage")}, 100);
+	setTimeout(	function(){$.mobile.changePage("#page-homepage")}, 600);
 </script>
 
 
@@ -128,7 +166,7 @@
 <!-- ***************************************************************************************/ -->
 <!-- *** PAGE HOME     *********************************************************************/ -->
 <!-- ***************************************************************************************/ -->
-<div data-role="page" id="page-homepage" data-url="page-homepage" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 1018px;">
+<div data-role="page" id="page-homepage" data-url="page-homepage" >
 	<div role="header">
 		<img src="img/tituloii_800px.png" alt="Juego incomodos invitados"  style="width:95%; margin:10px 11px auto;" />
 	</div>
@@ -334,11 +372,13 @@
 <div data-role="page" id="page-partida-Numeros" data-theme="a" data-url="page-partida-Numeros">
 	<div role="header">
 		<span id="ficha_InfoPartida"></span>
-	</div>
-	
-	
+	</div>	
 	<div role="main" class="ui-content z_div_centrado_vertical" style="width: 95%;">
-		<div id="ficha_mazo"></div>
+		<div data-role="swipe">
+			<div id="ficha_mazo"></div>
+			<div id="ficha_mazo2"></div>
+			<div id="ficha_mazo3"></div>
+		</div>
 	</div>
 	<div id="z_footer"> 
 		<a  data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
@@ -350,6 +390,8 @@
 	$(document).delegate("#page-partida-Numeros", "pagebeforeshow", function() {
 		txt = incomodosInvitados.partida.MAZO.replace(/\[/g,'').replace(/\]/g,'') // elimina caracteres:  [ y ]
 		$("#ficha_mazo").html(txt);
+		$("#ficha_mazo2").html(txt);
+		$("#ficha_mazo3").html(txt);
 		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' -- Dificultad: '+incomodosInvitados.partidaGetDificultadTxt());
 	});
 </script>
