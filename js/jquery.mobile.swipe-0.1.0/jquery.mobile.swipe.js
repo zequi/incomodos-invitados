@@ -4,8 +4,8 @@
             startSlide: 0,
             speed: 300,
             auto: null,
-            continuous: true,
-            disableScroll: false,
+            continuous: false,
+            disableScroll: true,
             stopPropagation: false
         },
 
@@ -33,7 +33,7 @@
             $elem.addClass('swipe').css(this.styles.swipe);
             $elem.children().css(this.styles.div).wrapAll($wrap);
             $elem.closest('[data-role="page"]').on('pageshow', function() {
-                Swipe($elem[0], _options);
+                window.mySwipe  = Swipe($elem[0], _options);
             });
         },
 
