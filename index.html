@@ -266,11 +266,11 @@
 	</div>	
 	<div role="main" class="ui-content z_div_centrado_vertical" style="width: 100%;">
 		<div data-role="swipe">
-			<div id="ficha_mazo1"></div>
-			<div id="ficha_mazo2"></div>
-			<div id="ficha_mazo3"></div>
-			<div id="ficha_mazo4"></div>
-			<div id="ficha_mazo5"></div>
+			<div id="ficha_mazo1"><div style="margin: 40px;"></div></div>
+			<div id="ficha_mazo2"><div style="margin: 40px;"></div></div>
+			<div id="ficha_mazo3"><div style="margin: 40px;"></div></div>
+			<div id="ficha_mazo4"><div style="margin: 40px;"></div></div>
+			<div id="ficha_mazo5"><div style="margin: 40px;"></div></div>
 		</div>
 		<br>
 		<img src="img/swipe-horizontal.png" style="display:block; margin-left:auto; margin-right:auto; width:25%;" />
@@ -283,11 +283,11 @@
 </div>
 <script>
 	$(document).delegate("#page-partida-Numeros", "pagebeforeshow", function() {
-		$("#ficha_mazo1").html(  incomodosInvitados.mazoArrayRango(  1, 50).join(", ") );
-		$("#ficha_mazo2").html(  incomodosInvitados.mazoArrayRango( 51,100).join(", ") );
-		$("#ficha_mazo3").html(  incomodosInvitados.mazoArrayRango(101,150).join(", ") );
-		$("#ficha_mazo4").html(  incomodosInvitados.mazoArrayRango(151,200).join(", ") );
-		$("#ficha_mazo5").html(  incomodosInvitados.mazoArrayRango(201,250).join(", ") );
+		$("#ficha_mazo1 div").html(  incomodosInvitados.mazoArrayRango(  1, 50).join(", ") );
+		$("#ficha_mazo2 div").html(  incomodosInvitados.mazoArrayRango( 51,100).join(", ") );
+		$("#ficha_mazo3 div").html(  incomodosInvitados.mazoArrayRango(101,150).join(", ") );
+		$("#ficha_mazo4 div").html(  incomodosInvitados.mazoArrayRango(151,200).join(", ") );
+		$("#ficha_mazo5 div").html(  incomodosInvitados.mazoArrayRango(201,250).join(", ") );
 		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' Dificultad: '+incomodosInvitados.partidaGetDificultadTxt()+' Jugadores: '+incomodosInvitados.jugadoresNumero );
 	});
 </script>
