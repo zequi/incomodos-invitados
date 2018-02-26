@@ -56,8 +56,9 @@
 		
 		
 		
-		
-		
+		.fichaMazoTxt {
+			margin: 55px 40px 40px 40px;
+		}
 
 		#ficha_mazo1 {
 			background-image: url(../img/papeles.png);
