@@ -132,7 +132,7 @@
 </div>
 <script>
 	function recuperarPartida() {
-		incomodosInvitados.partida!=null ?	$.mobile.changePage("#page-partida-Numeros") 
+		incomodosInvitados.partida!=null ?	$.mobile.changePage("#page-jugadores-numero") 
 			: console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
 	}
 </script>
@@ -246,7 +246,7 @@
 		}
 		incomodosInvitados.partidaBuscar(  $('#textarea-numeros').val()  ,  $('#textarea-letra').val()  );
 		if (incomodosInvitados.partida != null) {
-			$.mobile.changePage("#page-partida-Numeros");
+			$.mobile.changePage("#page-jugadores-numero");
 		}
 	}
 </script>
@@ -581,9 +581,10 @@
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
 		<br>
-		<br><span class="version"><br>v2.25-BETA   (2018feb26-15h57m)</span>
-			<br><span class="fix">[NEW]</span> Nueva página: Selección Jugadores a intentar resolver.
-			<br><span class="fix">[NEW]</span> PageNúmeros: Bug resuelto al mostrar 2 jugadores por defecto.
+		<br><span class="version"><br>v2.25-BETA   (2018feb26-16h41m)</span>
+			<br><span class="new">[NEW]</span> Nueva página: Selección Jugadores a intentar resolver.
+			<br><span class="fix">[VISUAL]</span> PageNúmeros: Bug resuelto al mostrar 2 jugadores por defecto.
+			<br><span class="new">[NEW]</span> Recuperar y BuscarPartida: en vez de enviar a Mazo, ahora va a PageJugadores ¿Correcto?
 
 		<br><span class="version"><br>v2.24-BETA   (2018feb25-16h13m)</span>
 			<br><span class="fix">[VISUAL]</span> Page-Números: Mejora visual de las fichas de nº
