@@ -9,9 +9,14 @@ const incomodosInvitados = {
 	mazoArray: null,
 	jugadoresNumero: 3, //por defecto las partidas son de 3 jugadores
 	jugadores: [	
-		{nombre:"Jugador 1"},
-		{nombre:"Jugador 2"},
-		{nombre:"Jugador 3"}
+		/*	Ejemplo del array
+			{nombre:"Jugador 1"},
+			{nombre:"Jugador 3"} */ 
+	],
+	resolvedores: [	
+		/*	Ejemplo del array
+			{nombre:"Jugador 1"},
+			{nombre:"Jugador 3"} */ 
 	],
 
 	downloadJSON: function(){

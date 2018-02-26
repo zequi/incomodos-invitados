@@ -182,14 +182,14 @@
 		</fieldset>
 		<fieldset id="formJugadoresNombres" data-mini="false">
 			<legend>Pon el nombre de cada jugador:</legend>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador1" id="textarea-jugador1" value="jugador-1"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador2" id="textarea-jugador2" value="jugador-2"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador3" id="textarea-jugador3" value="jugador-3"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador4" id="textarea-jugador4" value="jugador-4" disabled="disabled"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador5" id="textarea-jugador5" value="jugador-5" disabled="disabled"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador6" id="textarea-jugador6" value="jugador-6" disabled="disabled"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador7" id="textarea-jugador7" value="jugador-7" disabled="disabled"></textarea>
-			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador8" id="textarea-jugador8" value="jugador-8" disabled="disabled"></textarea>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador1" id="textarea-jugador1" value="jugador-1"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador2" id="textarea-jugador2" value="jugador-2"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador3" id="textarea-jugador3" value="jugador-3"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador4" id="textarea-jugador4" value="jugador-4" disabled="disabled"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador5" id="textarea-jugador5" value="jugador-5" disabled="disabled"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador6" id="textarea-jugador6" value="jugador-6" disabled="disabled"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador7" id="textarea-jugador7" value="jugador-7" disabled="disabled"></input>
+			<input rows="1" min="6" max="6" minlength=1 maxlength=20 required="required" autocomplete="on" name="jugador8" id="textarea-jugador8" value="jugador-8" disabled="disabled"></input>
 		</fieldset>
 	</div>
 	<div id="z_footer"> 
@@ -277,7 +277,7 @@
 	<div id="z_footer"> 
 		<a  data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
 		<!-- <a id="z_footer"   data-rel="back"  data-transition="reverse"><img src="img/btnvolver.png" style="width: 35%;" /></a> -->
-		<a href="#page-partida-Resolver" data-transition="slidefade"><img src="img/btnresolver.png" class="z_boton" style="width: 63%;" /></a>
+		<a href="#page-jugadores-resolvedores" data-transition="slidefade"><img src="img/btnresolver.png" class="z_boton" style="width: 63%;" /></a>
 	</div>
 </div>
 <script>
@@ -290,6 +290,62 @@
 		$("#ficha_InfoPartida").html('Partida: '+incomodosInvitados.Id+' Dificultad: '+incomodosInvitados.partidaGetDificultadTxt()+' Jugadores: '+incomodosInvitados.jugadoresNumero );
 	});
 </script>
+
+
+
+
+
+
+<!-- ***************************************************************************************/ -->
+<!-- *** PAGE SELECCION-RESOLVEDORES  ************************************************************/ -->
+<!-- ***************************************************************************************/ -->
+<div data-role="page" id="page-jugadores-resolvedores" data-theme="a" data-url="page-jugadores-resolvedores">
+	<div role="main" class="ui-content z_div_centrado_vertical">
+		<form id="formResolvedores" >
+			<fieldset data-role="controlgroup" data-iconpos="right">
+				<legend>¿Qué jugadores van a intentar resolver?<br>Selecciona solo los que van a resolver AHORA.</legend>
+				<input type="checkbox" name="resolvedor1" id="resolvedor1"></input><label for="resolvedor1">Jugador-1</label>
+				<input type="checkbox" name="resolvedor2" id="resolvedor2"></input><label for="resolvedor2">Jugador-2</label>
+				<input type="checkbox" name="resolvedor3" id="resolvedor3"></input><label for="resolvedor3">Jugador-3</label>
+				<input type="checkbox" name="resolvedor4" id="resolvedor4"></input><label for="resolvedor4">Jugador-4</label>
+				<input type="checkbox" name="resolvedor5" id="resolvedor5"></input><label for="resolvedor5">Jugador-5</label>
+				<input type="checkbox" name="resolvedor6" id="resolvedor6"></input><label for="resolvedor6">Jugador-6</label>
+				<input type="checkbox" name="resolvedor7" id="resolvedor7"></input><label for="resolvedor7">Jugador-7</label>
+				<input type="checkbox" name="resolvedor8" id="resolvedor8"></input><label for="resolvedor8">Jugador-8</label>
+			</fieldset>
+		</form>
+	</div>
+	<div id="z_footer"> 
+		<a data-rel="back" data-transition="reverse"><img src="img/btnvolver.png" class="z_boton" style="width: 35%;" /></a>
+		<a onclick="setResolvedores();"><img src="img/btnresolver.png" class="z_boton" style="width: 63%;" /></a>
+	</div>
+</div>
+<script>
+	$(document).delegate("#page-jugadores-resolvedores", "pagebeforeshow", function() {
+		// reset form
+			$("#formResolvedores :input").checkboxradio('enable');
+			$("#formResolvedores :input:gt("+ (incomodosInvitados.jugadoresNumero-1) +")").checkboxradio('disable');
+			//setea el listado con los nombres de todos los jugadores.
+			$.each(incomodosInvitados.jugadores, function(index, item){
+				$("#formResolvedores label[for*='"+ (index+1) +"']").html(item.nombre);
+			});
+			// pendiente uncheck todas las opciones por si acaso.
+	});
+	function setResolvedores() {	
+		if (incomodosInvitados.partida != null) {
+			incomodosInvitados.resolvedores.splice(0,8); 		//reset resolvedores.			
+			$("#formResolvedores input:checked").each(function(i){
+				var resolvedorTmp = $("#formResolvedores label[for='"+this.name+"']").html();				
+				incomodosInvitados.resolvedores.push({"nombre":resolvedorTmp}); // añada el resolvedor al array general
+			});
+			if (incomodosInvitados.resolvedores.length!=0) { $.mobile.changePage("#page-partida-Resolver",{transition:"slidefade"}); }
+		} else {
+			console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
+		}
+	};
+</script>
+
+
 
 
 
@@ -525,6 +581,12 @@
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
 		<br>
+		<br><span class="version"><br>v2.25-BETA   (2018feb26-15h57m)</span>
+			<br><span class="fix">[NEW]</span> Nueva página: Selección Jugadores a intentar resolver.
+
+		<br><span class="version"><br>v2.24-BETA   (2018feb25-16h13m)</span>
+			<br><span class="fix">[VISUAL]</span> Page-Números: Mejora visual de las fichas de nº
+
 		<br><span class="version"><br>v2.23-BETA   (2018feb21-21h54m)</span>
 			<br><span class="fix">[VISUAL]</span> Page-Números: no hace loop infinito al moverse entre fichas... o lo dejo como antes?
 			<br><span class="fix">[VISUAL]</span> Page-Números: corregido un ERROR en los nº del 40 al 50.
