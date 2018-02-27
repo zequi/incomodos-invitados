@@ -39,6 +39,22 @@ const incomodosInvitados = {
 		if (this.databaseJSON==null) { this.downloadJSON() };
 	},
 
+	saveToLocalStorage: function() {
+		// almacenar nuestro objeto entero en Local-Storage
+		if (typeof(Storage) !== "undefined") {
+			console.log('Saving all data to local storage.');
+			localStorage.setItem('incomodos-data', JSON.stringify(incomodosInvitados));
+		};
+	},
+
+	loadFromLocalStorage: function() {
+		// almacenar nuestro objeto entero en Local-Storage
+		if (typeof(Storage) !== "undefined") {
+			console.log('Loading all data from local storage.');
+			$.extend(incomodosInvitados,  JSON.parse(localStorage.getItem('incomodos-data'))  ); //recupera el Json del Storage, y copia los atributos del obj a la constante IncInv
+		};
+	},
+	
 	setPartida: function(part) {
 		this.partida = part;
 		this.mazoArray = this.partida.MAZO.replace('[','').replace(']','').split(', ').map( function(item){return parseInt(item, 10);} );	 //crea un array de Integers con map() a aprtir de la cadena MAZO.
@@ -81,6 +97,7 @@ const incomodosInvitados = {
 			this.Id = this.partida._id;
 			console.log	("Partida aleatoria encontrada. Dificultad="+this.partida.DIFICULTAD+". Id="+this.Id);   console.log(this.partida);	
 			if (this.partida != null) {
+				this.saveToLocalStorage();
 				$.mobile.changePage("#page-jugadores-numero");
 			}
 		} else {

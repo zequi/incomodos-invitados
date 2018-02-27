@@ -68,7 +68,7 @@
 		<!-- <p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
 	</div>
 	
-	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.25-beta</span></a>
+	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.26-beta</span></a>
 	
 	
 	<!-- <div data-role="foooter" data-theme="a" role="contentinfo" class="z_footer">  -->
@@ -134,7 +134,10 @@
 	function recuperarPartida() {
 		incomodosInvitados.partida!=null ?	$.mobile.changePage("#page-jugadores-numero") 
 			: console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
-	}
+	};
+	$(document).delegate("#page-partidas", "pageshow", function() {
+		incomodosInvitados.loadFromLocalStorage();
+	});
 </script>
     
 	
@@ -211,6 +214,7 @@
 			$("#formJugadoresNombres :input:enabled").each(function( index ) { 
 				incomodosInvitados.jugadores.push({"nombre":$(this).val()})		//inserta los nombres de todos los nuevos jugadores
 			});
+			incomodosInvitados.saveToLocalStorage();
 			$.mobile.changePage("#page-partida-Numeros",{transition: "slidefade"});
 		} else {
 			console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
@@ -246,6 +250,7 @@
 		}
 		incomodosInvitados.partidaBuscar(  $('#textarea-numeros').val()  ,  $('#textarea-letra').val()  );
 		if (incomodosInvitados.partida != null) {
+			incomodosInvitados.saveToLocalStorage();
 			$.mobile.changePage("#page-jugadores-numero");
 		}
 	}
@@ -338,7 +343,10 @@
 				var resolvedorTmp = $("#formResolvedores label[for='"+this.name+"']").html();				
 				incomodosInvitados.resolvedores.push({"nombre":resolvedorTmp}); // añada el resolvedor al array general
 			});
-			if (incomodosInvitados.resolvedores.length!=0) { $.mobile.changePage("#page-partida-Resolver",{transition:"slidefade"}); }
+			if (incomodosInvitados.resolvedores.length!=0) { 
+				incomodosInvitados.saveToLocalStorage();
+				$.mobile.changePage("#page-partida-Resolver",{transition:"slidefade"}); 
+			}
 		} else {
 			console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
 		}
@@ -573,7 +581,7 @@
 <!-- *** PAGE RELEASE NOTES     ************************************************************/ -->
 <!-- ***************************************************************************************/ -->
 <style type="text/css">
-	#page-releasenotes div { font-size:0.55em; background: black; font-family: 'arial'; }
+	#page-releasenotes div { font-size:0.50em; background: black; font-family: 'arial'; }
 	#page-releasenotes .version { background: red; }
 	#page-releasenotes .new { background: green; }
 	#page-releasenotes .fix { background: orange; }
@@ -581,6 +589,9 @@
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
 		<br>
+		<br><span class="version"><br>v2.26-BETA   (2018feb27-02h52m)</span>
+			<br><span class="new">[NEW]</span> Gran paso: guardamos en disco la info de la partida, para la próxima vez q se abra la app. Hay que probarlo bastante.		
+
 		<br><span class="version"><br>v2.25-BETA   (2018feb26-16h41m)</span>
 			<br><span class="new">[NEW]</span> Nueva página: Selección Jugadores a intentar resolver.
 			<br><span class="fix">[VISUAL]</span> PageNúmeros: Bug resuelto al mostrar 2 jugadores por defecto.
@@ -616,7 +627,7 @@
 			<br><span class="fix">[VISUAL]</span> Form-Resolver: cambio de orden de campos. 
 			<br><span class="new">[NEW]</span> Form-Resolver: desactivar complice si dificultad=baja. 
 	
-		<br><span class="version"><br>v2.16-BETA   (2018feb16-02h41m)</span>
+		<!--<br><span class="version"><br>v2.16-BETA   (2018feb16-02h41m)</span>
 			<br><span class="new">[NEW]</span> Reorganización del código Javascript. Sin nuevas funcionalidades ni fixes.
 
 		<br><span class="version"><br>v2.15-BETA   (2018feb13-19h16m)</span>
@@ -631,7 +642,7 @@
 			<br><span class="new">[NEW]</span> pantallas de ACIERTO y ERROR. Muy necesarias.
 			<br><span class="new">[NEW]</span> añadido en formulario de solución, q botón COMPROBAR sea INTELIGENTE, sólo activo si los campos están rellenos correctamente.
 	
-		<!--<br><br><span class="version"><br>PENDIENTE</span>
+		<br><br><span class="version"><br>PENDIENTE</span>
 			<br><span class="new">[NEW]</span> Para evitar errores de no existir partida (como reproducirlo: estar en medio de partida y reboot browser),  habría que en TODAS las cargas de página checkear si estta la partida cargada, si no, reload.... Cómo??? Necesario??? alternativas???
 			<br><span class="new">[NEW]</span> Buscar partida - pendiente pantalla si no se encuentra la partida.
 			<br><span class="new">[NEW]</span> Errores: cuando la app se deja dormida durante horas, en código intentar que DBJOSN=null para no usar memoria, pero hay q hacer un wait en el checkJson para q no falle al ser lanzado por buscar.
@@ -696,8 +707,9 @@
 				console.log("ERROR no controlado en el envío de Stats (habría que echar un vistazo al código).")
 			};
 		});
-	// Cada vez que se vaya a cerrar una página, miro si el JSON existe, POR SI ACASO!!! Pendiente de ver si tiene sentido esta funcionalidad.
+	// Cada vez que se vaya a cerrar una página, 
 		$('[data-role=page]').on('pagebeforehide', function (event, ui) {
+			// miro si el JSON existe, POR SI ACASO!!! Pendiente de ver si tiene sentido esta funcionalidad.
 			incomodosInvitados.checkJsonEnMemoria();
 		});
 </script>
