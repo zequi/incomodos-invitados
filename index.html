@@ -68,7 +68,7 @@
 		<!-- <p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
 	</div>
 	
-	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.26-beta</span></a>
+	<a id="z_footer" href="#page-releasenotes" data-transition="pop" style="color:white"><span id="z_footer" >v2.27-beta</span></a>
 	
 	
 	<!-- <div data-role="foooter" data-theme="a" role="contentinfo" class="z_footer">  -->
@@ -209,6 +209,7 @@
 		});
 	});
 	function setJugadores() {	
+		// cogemos los datos del formulario y guardamos en memoria.
 		if (incomodosInvitados.partida != null) {
 			incomodosInvitados.jugadores.splice(0,8); 		//reset jugadores (borra todos los jugadores y su informción).
 			$("#formJugadoresNombres :input:enabled").each(function( index ) { 
@@ -220,6 +221,15 @@
 			console.log("No se puede recuperar última partida. No lo tenemos en memoria.");
 		}
 	};
+	//rellena el formulario con los Jugadores de la última partida, si no hay partida deja 3 jugadores por defecto.
+	$(document).delegate("#page-jugadores-numero", "pagebeforeshow", function() {
+		if (incomodosInvitados.jugadoresNumero) {
+			$('#formJugadoresNum :radio')[incomodosInvitados.jugadoresNumero-2].click(); //activa los campos 
+			incomodosInvitados.jugadores.forEach((el,index) => { $("#formJugadoresNombres :input")[index].value = el.nombre; });
+		} else {
+			$('#formJugadoresNum :radio')[3-2].click() //set 3 jugadores por defecto
+		};
+	});
 </script>
 
 
@@ -589,6 +599,9 @@
 <div data-role="page" id="page-releasenotes" data-theme="a" data-url="page-releasenotes">
 	<div role="main" class="ui-content z_div_centrado_vertical"  >
 		<br>
+		<br><span class="version"><br>v2.27-BETA   (2018mar02-02h52m)</span>
+			<br><span class="new">[NEW]</span> Siempre se recordarán los jugadores (nº y nombres) de la última partida, incluso en partida aleatoria. ¿ok?
+
 		<br><span class="version"><br>v2.26-BETA   (2018feb27-02h52m)</span>
 			<br><span class="new">[NEW]</span> Gran paso: guardamos en disco la info de la partida, para la próxima vez q se abra la app. Hay que probarlo bastante.		
 
